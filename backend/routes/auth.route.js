@@ -5,6 +5,7 @@ import {body, validationResult} from "express-validator";
 import bcrypt from 'bcrypt';
 import jwt from "jsonwebtoken";
 import { user } from "../models/user.model.js";
+import { errors } from "mongodb-memory-server";
 
 router.post('/signup',
     body('email').trim().isEmail().withMessage('Invalid Email'),
@@ -21,12 +22,27 @@ router.post('/signup',
 
         const {name, email, password} = req.body;
         const hashedPassword = await bcrypt.hash(password,10);
-
-        const newuser = await user.create({
+        let newuser = '';
+        try {
+            newuser = await user.create({
             name,
             email,
             password: hashedPassword
         })
+        } catch (errs) {
+            logger.error(errs)
+            
+            if (errs.code === 11000) {
+                return res.status(400).json({
+                    message: 'Email already exists'
+                })
+            }else{
+                return res.status(500).json({
+                    message: 'something went wrong'
+                })
+            }
+        }
+
 
         const token = jwt.sign({
             userid: newuser._id,
