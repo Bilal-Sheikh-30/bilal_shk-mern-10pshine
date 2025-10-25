@@ -14,8 +14,7 @@ const Signup = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const backendURL = import.meta.env.VITE_BACKEND_URL;
-  console.log(backendURL);
+   const backendURL = globalThis.VITE_BACKEND_URL || 'http://localhost:3000';
 
   const handleChange = (e) => {
     setFormData({
@@ -112,7 +111,7 @@ const Signup = () => {
                   value={formData.name}
                   onChange={handleChange}
                   className="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none transition"
-                  placeholder="John Doe"
+                  placeholder="Ali Khan"
                   required
                 />
               </div>
@@ -130,7 +129,7 @@ const Signup = () => {
                   value={formData.email}
                   onChange={handleChange}
                   className="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none transition"
-                  placeholder="john@example.com"
+                  placeholder="ali@example.com"
                   required
                 />
               </div>

@@ -12,7 +12,7 @@ const Login = () => {
   const [popup, setPopup] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const backendURL = import.meta.env.VITE_BACKEND_URL;
+const backendURL = globalThis.VITE_BACKEND_URL || 'http://localhost:3000';
 
   const handleChange = (e) => {
     setFormData({
@@ -108,7 +108,7 @@ const Login = () => {
                   value={formData.email}
                   onChange={handleChange}
                   className="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none transition"
-                  placeholder="john@example.com"
+                  placeholder="someone@example.com"
                   required
                 />
               </div>
