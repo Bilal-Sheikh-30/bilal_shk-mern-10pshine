@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Eye, EyeOff, Mail, Lock, CheckCircle, XCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../App.css';
 
 const Login = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
@@ -45,6 +47,7 @@ const backendURL = globalThis.VITE_BACKEND_URL || 'http://localhost:3000';
       if (response.ok) {
         showPopup('success', data.message);
         setFormData({ email: '', password: '' });
+        navigate('/')
       } else {
         showPopup('error', data.message, data.errors || []);
       }
