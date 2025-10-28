@@ -51,7 +51,7 @@ const Dashboard = () => {
   };
 
   const handleAddNote = () => {
-    navigate('/add-note'); 
+    navigate('/newNote'); 
   };
 
   const filteredNotes = notes.filter((note) =>
