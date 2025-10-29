@@ -12,15 +12,15 @@ const NoteCard = ({ title, content, date }) => {
       <h3 className="text-xl font-bold text-gray-800 mb-3 line-clamp-1">
         {title}
       </h3>
-      
-      <p className="text-gray-600 mb-4 line-clamp-3">
-        {content}
-      </p>
-      
+
+      <div
+        className="text-gray-600 mb-4 line-clamp-3 prose prose-sm max-w-none"
+        dangerouslySetInnerHTML={{ __html: content }}
+      />
+
       <div className="flex items-center gap-2 text-sm text-gray-500">
         <Calendar className="w-4 h-4 text-emerald-600" />
-        {/* <span>Last modified: {formatDate(date)}</span> */}
-        <span>{date}</span>
+        <span>{formatDate(date)}</span>
       </div>
     </div>
   );
