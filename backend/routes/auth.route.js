@@ -6,6 +6,7 @@ import bcrypt from 'bcrypt';
 import jwt from "jsonwebtoken";
 import { user } from "../models/user.model.js";
 import { errors } from "mongodb-memory-server";
+import { authMiddleware } from "../middlewares/auth.middleware.js";
 
 router.post('/signup',
     body('email').trim().isEmail().withMessage('Invalid Email'),
@@ -110,4 +111,17 @@ router.post('/login',
         })
 
 })
+
+router.get('/me', authMiddleware,async(req, res) => {
+    const loginedUser = await user.findById(req.user.userid).select('name email signupDate lastLogin');
+    return res.status(200).json({
+        user: loginedUser
+    })
+});
+
+router.post('/logout', (req, res) => {
+  res.clearCookie('token');
+  return res.status(200).json({ message: 'Logged out successfully.' });
+});
+
 export default router;
