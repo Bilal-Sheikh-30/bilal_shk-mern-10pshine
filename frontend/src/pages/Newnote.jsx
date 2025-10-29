@@ -14,9 +14,10 @@ const NewNote = () => {
   const navigate = useNavigate();
 
   const user = JSON.parse(localStorage.getItem('user'));
-  const backendURL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
+  const backendURL = globalThis.VITE_BACKEND_URL || 'http://localhost:3000';
 
-  // React Quill modules configuration
+
+  // React Quill modules config
   const modules = {
     toolbar: [
       [{ 'header': [1, 2, 3, false] }],
