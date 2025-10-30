@@ -4,6 +4,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Dashboard from './pages/Dashboard';
 import NewNote from './pages/Newnote';
+import ReadNote from './pages/ReadNote';
 import ProtectedRoute from './components/ProtectedRoute';
 
 const App = () => {
@@ -14,6 +15,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/newNote" element={ <ProtectedRoute> <NewNote /> </ProtectedRoute>} />
+        <Route path="/note/:id" element={ <ProtectedRoute> <ReadNote /> </ProtectedRoute>} />
       </Routes>
     </BrowserRouter>
   );
