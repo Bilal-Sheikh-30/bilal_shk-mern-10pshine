@@ -178,4 +178,31 @@ router.delete('/delete/:id', authMiddleware, async (req, res) => {
 
 });
 
+// recover note
+router.patch('/recover/:id', authMiddleware, async (req, res) => {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        return res.status(400).json({message: "Invalid ID"});
+    }
+
+    try {
+        const updatedNote = await Note.findOneAndUpdate({
+            _id: req.params.id, creator: req.user.userid
+        }, {
+            $set: {isdeleted: false}
+        }, {
+            new: true
+        })
+
+        if (!updatedNote) {
+            return res.status(404).json({message: "Can not find requested note"})
+        }
+
+        return res.status(200).json({message: "Note recovered."})
+
+    } catch (err) {
+        logger.error(err);
+        return res.status(500).json('something went wrong.')
+    }
+});
+
 export default router;
