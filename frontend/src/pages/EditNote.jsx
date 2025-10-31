@@ -278,7 +278,7 @@ const EditNote = () => {
             {/* Left - Back Button & Title */}
             <div className="flex items-center gap-4">
               <button
-                onClick={() => navigate(`/readNote/${id}`)}
+                onClick={() => navigate(`/note/${id}`)}
                 className="p-2 rounded-full hover:bg-emerald-50 transition"
                 title="Back to Note"
               >
