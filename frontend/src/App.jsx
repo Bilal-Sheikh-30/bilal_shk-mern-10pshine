@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard';
 import NewNote from './pages/Newnote';
 import ReadNote from './pages/ReadNote';
 import EditNote from './pages/EditNote';
+import Bin from './pages/Bin';
 import ProtectedRoute from './components/ProtectedRoute';
 
 const App = () => {
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="/newNote" element={ <ProtectedRoute> <NewNote /> </ProtectedRoute>} />
         <Route path="/note/:id" element={ <ProtectedRoute> <ReadNote /> </ProtectedRoute>} />
         <Route path="/editNote/:id" element={ <ProtectedRoute> <EditNote /> </ProtectedRoute>} />
+        <Route path="/bin" element={ <ProtectedRoute> <Bin /> </ProtectedRoute>} />
       </Routes>
     </BrowserRouter>
   );

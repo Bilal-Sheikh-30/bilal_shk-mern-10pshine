@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Search, User, LogOut, Plus, Trash2 } from 'lucide-react';
+import { User, LogOut, House  } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
-import NoteCard from '../components/NoteCard';
+import DeletedNoteCard from '../components/DeletedNoteCard';
 
-const Dashboard = () => {
+const Bin = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [showProfile, setShowProfile] = useState(false);
   const [notes, setNotes] = useState([]);
@@ -15,7 +15,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchNotes = async () => {
       try {
-        const res = await fetch(`${backendURL}/notes/`, {
+        const res = await fetch(`${backendURL}/notes/bin`, {
           method: 'GET',
           credentials: 'include', 
         });
@@ -50,12 +50,9 @@ const Dashboard = () => {
     }
   };
 
-  const handleAddNote = () => {
-    navigate('/newNote'); 
-  };
 
-  const handlebin = () => {
-    navigate('/bin'); 
+  const handlehome = () => {
+    navigate('/'); 
   };
 
   const filteredNotes = notes.filter((note) =>
@@ -69,20 +66,6 @@ const Dashboard = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <h1 className="text-2xl font-bold text-emerald-600">Notes.</h1>
-
-            {/* Search */}
-            <div className="hidden md:flex flex-1 max-w-md mx-8">
-              <div className="relative w-full">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <input
-                  type="text"
-                  placeholder="Search notes..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none"
-                />
-              </div>
-            </div>
 
             {/* Profile & Logout */}
             <div className="flex items-center gap-4">
@@ -107,13 +90,12 @@ const Dashboard = () => {
               </div>
 
               <button
-                onClick={handlebin}
-                className="p-2 rounded-full hover:bg-orange-100 transition"
-                title="Bin"
+                onClick={handlehome}
+                className="p-2 rounded-full hover:bg-emerald-50 transition"
+                title="Home"
               >
-                <Trash2 className="w-6 h-6 text-emerald-600" />
+                <House className="w-6 h-6 text-emerald-600" />
               </button>
-                {/* <Trash2 className="w-6 h-6 text-emerald-600" /> */}
 
               <button
                 onClick={handleLogout}
@@ -125,19 +107,6 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* Mobile Search */}
-          <div className="md:hidden pb-4">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-              <input
-                type="text"
-                placeholder="Search notes..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none"
-              />
-            </div>
-          </div>
         </div>
       </nav>
 
@@ -146,23 +115,11 @@ const Dashboard = () => {
         {filteredNotes.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredNotes.map((note) => (
-              <Link key={note._id} to={`/note/${note._id}`}>
-                <NoteCard
-                  title={note.title}
-                  content={
-                    note.content.length > 100
-                      ? note.content.slice(0, 100) + '...'
-                      : note.content
-                  }
-                  date={`Last modified: ${new Date(note.updatedAt).toLocaleString('en-US', {
-                    year: 'numeric',
-                    month: 'short',
-                    day: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                  })}`}
-                />
-              </Link>
+              <DeletedNoteCard
+                id={note._id}
+                title={note.title}
+                content={note.content}
+              />
             ))}
           </div>
         ) : (
@@ -172,15 +129,8 @@ const Dashboard = () => {
         )}
       </main>
 
-      {/* Floating Add Button */}
-      <button
-        onClick={handleAddNote}
-        className="fixed bottom-6 right-6 bg-emerald-600 hover:bg-emerald-700 text-white p-4 rounded-full shadow-lg transition-all hover:scale-110"
-      >
-        <Plus className="w-6 h-6" />
-      </button>
     </div>
   );
 };
 
-export default Dashboard;
+export default Bin;
