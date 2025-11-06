@@ -58,9 +58,13 @@ const Dashboard = () => {
     navigate('/bin'); 
   };
 
-  const filteredNotes = notes.filter((note) =>
-    note.title.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredNotes = notes.filter((note) => {
+  const query = searchQuery.trim().toLowerCase();
+
+  // Remove HTML tags and attributes for correct search
+  const plainText = note.content.replace(/<[^>]+>/g, '').toLowerCase();
+  return note.title.toLowerCase().includes(query) || plainText.toLowerCase().includes(query)
+});
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-white">
@@ -167,7 +171,7 @@ const Dashboard = () => {
           </div>
         ) : (
           <div className="text-center py-20">
-            <p className="text-gray-500 text-lg">No notes yet. Create your first note!</p>
+            <p className="text-gray-500 text-lg">No notes found.</p>
           </div>
         )}
       </main>
