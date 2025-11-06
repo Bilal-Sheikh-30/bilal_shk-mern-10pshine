@@ -23,7 +23,7 @@ const NoteCard = ({ title, content, date }) => {
 
       <div className="flex items-center gap-2 text-sm text-gray-500 mt-auto pt-4 border-t border-gray-100">
         <Calendar className="w-4 h-4 text-emerald-600" />
-        <span>{formatDate(date)}</span>
+        <span>Last edit: {formatDate(date)}</span>
       </div>
     </div>
   );

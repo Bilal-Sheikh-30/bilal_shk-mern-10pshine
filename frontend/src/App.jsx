@@ -5,6 +5,7 @@ import Signup from './pages/Signup';
 import Dashboard from './pages/Dashboard';
 import NewNote from './pages/Newnote';
 import ReadNote from './pages/ReadNote';
+import EditNote from './pages/EditNote';
 import ProtectedRoute from './components/ProtectedRoute';
 
 const App = () => {
@@ -16,6 +17,7 @@ const App = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/newNote" element={ <ProtectedRoute> <NewNote /> </ProtectedRoute>} />
         <Route path="/note/:id" element={ <ProtectedRoute> <ReadNote /> </ProtectedRoute>} />
+        <Route path="/editNote/:id" element={ <ProtectedRoute> <EditNote /> </ProtectedRoute>} />
       </Routes>
     </BrowserRouter>
   );
