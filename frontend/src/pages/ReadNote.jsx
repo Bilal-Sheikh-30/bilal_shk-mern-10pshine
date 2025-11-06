@@ -6,6 +6,10 @@ const ReadNote = () => {
   const { id } = useParams();
   const [note, setNote] = useState(null);
   const [showProfile, setShowProfile] = useState(false);
+
+  const [showDeletePopup, setShowDeletePopup] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+
   const navigate = useNavigate();
 
   const user = JSON.parse(localStorage.getItem('user'));
@@ -44,6 +48,28 @@ const ReadNote = () => {
       console.error('Network error during logout', err);
     }
   };
+
+  const handleDelete = async () => {
+  setIsDeleting(true);
+  try {
+    const res = await fetch(`${backendURL}/notes/move-to-bin/${note._id}`, {
+      method: 'PATCH',
+      credentials: 'include',
+    });
+    const data = await res.json();
+    if (res.ok) {
+      navigate('/');
+    } else {
+      alert(data.message || 'Failed to delete note.');
+    }
+  } catch (err) {
+    console.error('Error deleting note:', err);
+    alert('Something went wrong.');
+  } finally {
+    setIsDeleting(false);
+    setShowDeletePopup(false);
+  }
+};
 
   if (!note) {
     return (
@@ -229,7 +255,7 @@ const ReadNote = () => {
               </button>
 
               <button
-                onClick={() => console.log('delete note logic here')}
+                onClick={() => setShowDeletePopup(true)}
                 className="hover:text-red-600 transition"
                 title="Delete"
               >
@@ -238,6 +264,35 @@ const ReadNote = () => {
             </div>
           </div>
         </div>
+        {showDeletePopup && (
+  <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50">
+    <div className="bg-white p-6 rounded-2xl shadow-xl w-80 text-center">
+      <h2 className="text-lg font-semibold text-gray-800 mb-3">
+        Move note to bin?
+      </h2>
+      <p className="text-sm text-gray-600 mb-6">
+        This note will be moved to bin. You can restore it later if needed.
+      </p>
+      <div className="flex justify-center gap-4">
+        <button
+          onClick={() => setShowDeletePopup(false)}
+          className="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100 transition"
+          disabled={isDeleting}
+        >
+          Cancel
+        </button>
+        <button
+          onClick={handleDelete}
+          className="px-4 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600 transition disabled:opacity-60"
+          disabled={isDeleting}
+        >
+          {isDeleting ? 'Deleting...' : 'Confirm'}
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
       </main>
     </div>
   );
