@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Search, User, LogOut, Plus } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import NoteCard from '../components/NoteCard';
 
 const Dashboard = () => {
@@ -90,17 +90,16 @@ const Dashboard = () => {
                   <User className="w-6 h-6 text-emerald-600" />
                 </button>
                 {showProfile && (
-  <div className="absolute right-0 mt-2 w-56 bg-emerald-50/80 backdrop-blur-md rounded-xl shadow-lg border border-emerald-100">
-    <div className="px-4 py-3 border-b border-emerald-100">
-      <p className="text-sm font-semibold text-emerald-800">{user.name}</p>
-      <p className="text-sm text-emerald-600">{user.email}</p>
-      <p className="text-sm text-emerald-600 mt-1">
-        Joined: {new Date(user.signupDate).toLocaleDateString()}
-      </p>
-    </div>
-  </div>
-)}
-
+                  <div className="absolute right-0 mt-2 w-56 bg-emerald-50/80 backdrop-blur-md rounded-xl shadow-lg border border-emerald-100">
+                    <div className="px-4 py-3 border-b border-emerald-100">
+                      <p className="text-sm font-semibold text-emerald-800">{user.name}</p>
+                      <p className="text-sm text-emerald-600">{user.email}</p>
+                      <p className="text-sm text-emerald-600 mt-1">
+                        Joined: {new Date(user.signupDate).toLocaleDateString()}
+                      </p>
+                    </div>
+                  </div>
+                )}
               </div>
 
               <button
@@ -134,22 +133,23 @@ const Dashboard = () => {
         {filteredNotes.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredNotes.map((note) => (
-              <NoteCard
-                key={note._id}
-                title={note.title}
-                content={
-                  note.content.length > 100
-                    ? note.content.slice(0, 100) + '...'
-                    : note.content
-                }
-                date={`Last modified: ${new Date(note.updatedAt).toLocaleString('en-US', {
-  year: 'numeric',
-  month: 'short',
-  day: 'numeric',
-  hour: '2-digit',
-  minute: '2-digit',
-})}`}
-              />
+              <Link key={note._id} to={`/note/${note._id}`}>
+                <NoteCard
+                  title={note.title}
+                  content={
+                    note.content.length > 100
+                      ? note.content.slice(0, 100) + '...'
+                      : note.content
+                  }
+                  date={`Last modified: ${new Date(note.updatedAt).toLocaleString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                  })}`}
+                />
+              </Link>
             ))}
           </div>
         ) : (
