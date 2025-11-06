@@ -15,14 +15,14 @@ const renderWithRouter = (ui) => render(<BrowserRouter>{ui}</BrowserRouter>);
 describe('Signup Component', () => {
   test('renders all inputs', () => {
     renderWithRouter(<Signup />);
-    expect(screen.getByPlaceholderText('John Doe')).toBeInTheDocument();
-    expect(screen.getByPlaceholderText('john@example.com')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Ali Khan')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('ali@example.com')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('••••••••')).toBeInTheDocument();
   });
 
   test('updates input fields correctly', () => {
     renderWithRouter(<Signup />);
-    const nameInput = screen.getByPlaceholderText('John Doe');
+    const nameInput = screen.getByPlaceholderText('Ali Khan');
     fireEvent.change(nameInput, { target: { value: 'Bilal' } });
     expect(nameInput.value).toBe('Bilal');
   });

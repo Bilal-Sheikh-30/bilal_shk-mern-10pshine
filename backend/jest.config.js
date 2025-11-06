@@ -3,10 +3,14 @@ export default {
   transform: {
     "^.+\\.jsx?$": "babel-jest"
   },
-  coverageDirectory: "coverage",
+  collectCoverage: true, 
+  coverageDirectory: "coverage", 
+  coverageReporters: ["text", "lcov"], 
   collectCoverageFrom: [
     "routes/**/*.js",
     "controllers/**/*.js",
-    "utils/**/*.js"
+    "utils/**/*.js",
+    "!**/node_modules/**",
+    "!**/tests/**" 
   ]
 };
