@@ -3,7 +3,7 @@ import Login from '../pages/Login';
 import { BrowserRouter } from 'react-router-dom';
 
 beforeEach(() => {
-  global.fetch = jest.fn(); 
+  global.fetch = jest.fn();
 });
 
 afterEach(() => {
@@ -12,20 +12,22 @@ afterEach(() => {
 
 describe('Login Component', () => {
   test('renders email and password inputs', () => {
-    render(<BrowserRouter>
+    render(
+      <BrowserRouter>
         <Login />
       </BrowserRouter>
-);
-    expect(screen.getByPlaceholderText('john@example.com')).toBeInTheDocument();
+    );
+    expect(screen.getByPlaceholderText('someone@example.com')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('••••••••')).toBeInTheDocument();
   });
 
   test('updates input fields on change', () => {
-    render(<BrowserRouter>
+    render(
+      <BrowserRouter>
         <Login />
       </BrowserRouter>
-);
-    const emailInput = screen.getByPlaceholderText('john@example.com');
+    );
+    const emailInput = screen.getByPlaceholderText('someone@example.com');
     fireEvent.change(emailInput, { target: { value: 'test@mail.com' } });
     expect(emailInput.value).toBe('test@mail.com');
   });
@@ -36,11 +38,12 @@ describe('Login Component', () => {
       json: async () => ({ message: 'Login successful' }),
     });
 
-    render(<BrowserRouter>
+    render(
+      <BrowserRouter>
         <Login />
       </BrowserRouter>
-);
-    const emailInput = screen.getByPlaceholderText('john@example.com');
+    );
+    const emailInput = screen.getByPlaceholderText('someone@example.com');
     const passwordInput = screen.getByPlaceholderText('••••••••');
     const button = screen.getByRole('button', { name: /sign in/i });
 
@@ -59,10 +62,11 @@ describe('Login Component', () => {
       json: async () => ({ message: 'Invalid credentials' }),
     });
 
-    render(<BrowserRouter>
+    render(
+      <BrowserRouter>
         <Login />
       </BrowserRouter>
-);
+    );
     fireEvent.click(screen.getByRole('button', { name: /sign in/i }));
 
     await waitFor(() => {

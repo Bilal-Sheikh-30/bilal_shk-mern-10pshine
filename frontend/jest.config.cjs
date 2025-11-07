@@ -8,4 +8,7 @@ module.exports = {
   moduleNameMapper: {
     '\\.(css|scss|sass)$': '<rootDir>/jest.styleMock.js',
   },
+  collectCoverage: true,
+  coverageDirectory: "coverage",
+  coverageReporters: ["lcov", "text"],
 };
